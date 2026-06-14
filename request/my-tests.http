@@ -1,0 +1,52 @@
+@hostname = http://localhost:4003
+
+
+GET {{hostname}}
+
+###
+
+GET http://localhost:4003/users
+
+
+###
+GET http://localhost:4003/users/5
+
+
+###
+POST http://localhost:4003/user
+Content-Type: application/json
+
+{
+    "name": "Hawa"
+}
+
+###
+
+PATCH {{hostname}}/users/2
+Content-Type: application/json
+
+{
+    "email": "hawaadediran@email.com"
+}
+
+###
+
+PATCH {{hostname}}/users/3
+Content-Type: application/json
+
+###
+PATCH {{hostname}}/users/-1
+Content-Type: application/json
+
+###
+PUT {{hostname}}/users/2
+Content-Type: application/json
+
+{
+  "name": "Aisha",
+  "email": "aisha@email.com",
+  "age": 22
+}
+
+###
+DELETE {{hostname}}/users/1
