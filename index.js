@@ -119,23 +119,6 @@ app.delete("/users/:id", (req, res) => {
     });
 })
 
-// app.put("/user/:id", (req, res) => {
-//     const { body, params } = req
-//     const { name, email, age } = body;
-
-//   if (!name || !email || !age) {
-//     return res.status(422).json({
-//       message: "All fields are required",
-//       error: true,
-//     });
-//   }
-// })
-
-
-
-
-
-
 // How do you create another route called /products ?
 app.get("/products", (req, res) => {
     res.status(200).json({ products })
