@@ -88,7 +88,7 @@ app.put("/users/:id", (req,res) => {
       message: "user not found",
       error: true,
     });
-  }
+    }
     users[userIndex] = {
         id: users[userIndex].id,
         name,
@@ -103,8 +103,8 @@ app.put("/users/:id", (req,res) => {
 })
 
 app.delete("/users/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const userIndex = users.findIndex((u) => u.id === id);
+    const id = req.params.id;
+    const userIndex = users.findIndex((u) => u.id == id);
     if (userIndex === -1) {
         return res.status(404).json({
         message: "user not found",
@@ -115,7 +115,7 @@ app.delete("/users/:id", (req, res) => {
     const deletedUser = users.splice(userIndex, 1);
     return res.status(200).json({
         message: "user deleted successfully",
-        data: deletedUser[0],
+        data: deletedUser,
     });
 })
 
