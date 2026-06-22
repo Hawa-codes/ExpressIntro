@@ -4,7 +4,6 @@
 GET {{hostname}}
 
 ###
-
 GET http://localhost:4003/users
 
 
