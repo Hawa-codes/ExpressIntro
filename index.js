@@ -140,6 +140,6 @@ app.get("/products/:id", (req, res) => {
 });
 
 app.listen(4003, () => {
-  console.log("Server is running on port 4000");
+  console.log("Server is running on port 4003");
 });
 
