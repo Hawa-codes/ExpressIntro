@@ -75,13 +75,6 @@ app.patch("/users/:id", (req, res) => {
 
 app.put("/users/:id", (req,res) => {
     const {body, params} = req;
-    const { name, email, age } =  body;
-    if (!name || !email || !age) {
-        return res.status(404).json({
-            message: "All fields are required",
-            error: true,
-        });
-    }
     const userIndex = users.findIndex(({ id }) => id == params.id);
     if (userIndex === -1) {
     return res.status(404).json({
@@ -89,6 +82,14 @@ app.put("/users/:id", (req,res) => {
       error: true,
     });
     }
+    const { name, email, age } =  body;
+    if (!name || !email || !age) {
+        return res.status(422).json({
+            message: "All fields are required",
+            error: true,
+        });
+    }
+
     users[userIndex] = {
         id: users[userIndex].id,
         name,
@@ -114,8 +115,7 @@ app.delete("/users/:id", (req, res) => {
 
     const deletedUser = users.splice(userIndex, 1);
     return res.status(200).json({
-        message: "user deleted successfully",
-        data: deletedUser,
+        message: "user deleted successfully"
     });
 })
 
