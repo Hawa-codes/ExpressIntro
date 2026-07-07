@@ -92,23 +92,20 @@ app.post("/user", (req, res) => {
     });
 });
 
-app.patch("/users/:id", (req, res) => {
-    const { body, params } = req;
-    const email = body.email
-    if (!email) {
-    return res.status(422).json({
-      message: "Email is missing",
-      error: true,
-    });
-  }
+const validateEmail = (req, res, next) => {
+    if (!req.body.email) {
+        return res.status(422).json({
+            message: "Email is missing",
+            error: true,
+        });
+    }
+    next();
+};
 
+app.patch("/users/:id", validateUser, validateEmail, (req, res) => {
+  const { body, params } = req;
+    
   const userIndex = users.findIndex(({ id }) => id == params.id);
-  if (userIndex === -1) {
-    return res.status(404).json({
-      message: "user not found",
-      error: true,
-    });
-  }
   
   users[userIndex].email = body.email;
   res.status(200).json({
@@ -117,15 +114,10 @@ app.patch("/users/:id", (req, res) => {
   });
 });
 
-app.put("/users/:id", (req,res) => {
+
+app.put("/users/:id", validateUser, (req,res) => {
     const {body, params} = req;
     const userIndex = users.findIndex(({ id }) => id == params.id);
-    if (userIndex === -1) {
-    return res.status(404).json({
-      message: "user not found",
-      error: true,
-    });
-    }
     
     const { name, email, age } =  body;
     if (!name || !email || !age) {
@@ -148,20 +140,21 @@ app.put("/users/:id", (req,res) => {
   });
 })
 
-app.delete("/users/:id", (req, res) => {
+app.delete("/users/:id", validateUser, (req, res) => {
     const id = req.params.id;
     const userIndex = users.findIndex((u) => u.id == id);
-    if (userIndex === -1) {
-        return res.status(404).json({
-        message: "user not found",
-        error: true,
-        });
-    }
+    users.splice(userIndex, 1);
 
     return res.status(200).json({
         message: "user deleted successfully"
     });
 })
+
+
+
+
+
+
 
 // How do you create another route called /products ?
 app.get("/products", (req, res) => {
@@ -187,3 +180,25 @@ app.listen(4003, () => {
   console.log("Server is running on port 4003");
 });
 
+const u =  {
+  id: 1,
+  email: "ij@gmail.com",
+  name: "Ijeoma",
+  age: 19,
+  password: "helloooo",
+};
+
+const body = {
+  email: "new@gmail.com",
+  age: 25,
+};
+
+const newU = {
+  ...u,
+  ...body,
+};
+
+const { password, age, ...response } = newU;
+
+console.log(newU);
+console.log(response);
