@@ -102,7 +102,7 @@ const validateEmail = (req, res, next) => {
     next();
 };
 
-app.patch("/users/:id", validateUser, validateEmail, (req, res) => {
+app.patch("/users/:id", validateEmail, validateUser, (req, res) => {
   const { body, params } = req;
     
   const userIndex = users.findIndex(({ id }) => id == params.id);
